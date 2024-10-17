@@ -1,94 +1,81 @@
 'use client';
+
 import Link from "next/link";
-// import Image from "next/image";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
 import {
     HomeIcon,
     DocumentIcon,
     AcademicCapIcon,
     CommandLineIcon,
     LinkIcon,
-    // MoonIcon,
+    Cog6ToothIcon
 } from "@heroicons/react/24/outline";
 
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+interface LinkProps {
+    name: string;
+    href: string;
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+}
 
-// import {
-//     faGithub,
-//     faLinkedinIn,
-//     faXTwitter
-// } from '@fortawesome/free-brands-svg-icons'
+const links: LinkProps[] = [
+    {
+        name: 'Home',
+        href: '/',
+        icon: HomeIcon
+    },
+    {
+        name: 'About',
+        href: '/about',
+        icon: DocumentIcon
+    },
+    {
+        name: 'Education',
+        href: '/education',
+        icon: AcademicCapIcon
+    },
+    {
+        name: 'Projects',
+        href: '/projects',
+        icon: CommandLineIcon
+    },
+    {
+        name: 'Contact',
+        href: '/contact',
+        icon: LinkIcon
+    },
+];
 
 const Header = () => {
     const pathname = usePathname();
     return (
-        <header className={`flex flex-col justify-between my-5 mx-2 fixed top-1/2 left-0 -translate-y-1/2`}>
-            <nav className={`flex flex-col gap-2`}>
-                <Link href="/"
-                    className={`${pathname === '/' ? 'text-blue-500' : 'text-gray-500'}`}
-                >
-                    <HomeIcon width={30} />
-
-                </Link>
-                <Link href="/about"
-                    className={`${pathname === '/about' ? 'text-blue-500' : 'text-gray-500'}`}>
-                    <DocumentIcon width={30} />
-                </Link>
-
-                <Link href="/education"
-                    className={`${pathname === '/education' ? 'text-blue-500' : 'text-gray-500'}`}>
-                    <AcademicCapIcon width={30} />
-                </Link>
-
-                <Link href="/projects"
-                    className={`${pathname === '/projects' ? 'text-blue-500' : 'text-gray-500'}`}>
-                    <CommandLineIcon width={30} />
-
-                </Link>
-                <Link href="/contact"
-                    className={`${pathname === '/contact' ? 'text-blue-500' : 'text-gray-500'}`}>
-                    <LinkIcon width={30} />
-
-                </Link>
+        <header className={`fixed flex flex-col justify-center align-middle min-h-screen `}>
+            <nav className={`flex flex-col gap-2 p-2 rounded-2xl mx-1 bg-zinc-800`}>
+                {/* Links */}
+                {links.map((link) => {
+                    const LinkIcon = link.icon;
+                    return (
+                        <Link
+                            key={link.name}
+                            href={link.href}
+                            className={clsx(
+                                pathname === link.href ? 'text-blue-500' : 'text-gray-500',
+                                'hover:text-blue-500 p-1'
+                            )}
+                        >
+                            <LinkIcon width={30} />
+                        </Link>
+                    )
+                })}
+                {/* Divider */}
+                <div className="border border-1 border-gray-500 rounded-xl"></div>
+                {/* Settings */}
+                <button className="text-gray-500 hover:text-blue-500 p-1">
+                    <Cog6ToothIcon width={30} />
+                </button>
             </nav>
-
         </header>
     )
 }
 
 export default Header;
-
-{/* <section className={`flex flex-col gap-2`}>
-                <Link
-                    href="https://www.linkedin.com/in/m-essam/"
-                    target="_blank"
-                >
-                    <FontAwesomeIcon icon={faLinkedinIn} size="2x" />
-
-                </Link>
-                <Link
-                    href="https://github.com/m-essam-s"
-                    target="_blank"
-                >
-                    <FontAwesomeIcon icon={faGithub} size="2x" />
-                </Link>
-                <Link
-                    href="https://x.com/m_essam_s"
-                    target="_blank"
-                >
-                    <FontAwesomeIcon icon={faXTwitter} size="2x" />
-                </Link>
-            </section>
-            <section >
-                <MoonIcon width={30} />
-            </section> */}
-
-
-// <section>
-//     <Image
-//         src="/logo.ico"
-//         alt="Elite Solutions Logo"
-//         width={30}
-//         height={30}
-//     />
-// </section>
